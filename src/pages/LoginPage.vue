@@ -37,8 +37,8 @@ import { ref } from "vue"
 
 const router = useRouter()
 
-const username = ref("")
-const password = ref("")
+const username = ref("user1")
+const password = ref("1234")
 
 const login = async () => {
   if (username.value === "" || password.value === "") {

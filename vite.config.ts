@@ -1,10 +1,11 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vite"
 //Install node types before calling below import
-import { fileURLToPath } from "url";
-import path from "path";
-import vue from "@vitejs/plugin-vue";
+import { fileURLToPath } from "url"
+import path from "path"
+import vue from "@vitejs/plugin-vue"
 
-import AutoImport from "unplugin-auto-import/vite";
+import AutoImport from "unplugin-auto-import/vite"
+import svgLoader from "vite-svg-loader"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,6 +25,7 @@ export default defineConfig({
       vueTemplate: true,
       eslintrc: { enabled: true },
     }),
+    svgLoader(),
   ],
   base: "./",
   resolve: {
@@ -37,4 +39,4 @@ export default defineConfig({
       "@pages": path.resolve(__dirname, "src/@Pages"),
     },
   },
-});
+})

@@ -36,9 +36,16 @@
       </div>
     </section>
 
+    <!-- Display selected seats as a comma-separated list -->
+    <section class="selected-seats">
+      <h2 class="mb-2 text-lg font-semibold text-gray-700">
+        Selected Seats {{ selectedSeatNumbers }}
+      </h2>
+    </section>
+
     <!-- Dynamic grid system using Tailwind CSS grid -->
     <section>
-      <div class="grid grid-cols-{{ computedColumns }} gap-4">
+      <div class="grid grid-cols-{{ computedColumns }} ">
         <div
           v-for="(row, rowIndex) in computedGrid"
           :key="rowIndex"
@@ -47,22 +54,102 @@
           <div
             v-for="(cell, columnIndex) in row"
             :key="columnIndex"
-            class="border border-gray-300 p-2"
+            class="p-1"
             :style="{ width: '4rem', height: '4rem' }"
           >
-            {{ cell }}
+            <SeatComp
+              name="seat"
+              :cell="cell"
+              v-model="selectedSeats[cell]"
+              @seatSelected="onSeatSelected"
+            />
+            <!-- {{ cell }} -->
+            <!-- Add this line to log the cell content -->
           </div>
         </div>
       </div>
+    </section>
+    <!-- Add a button to trigger the screenshot capture and download -->
+    <section class="download-button">
+      <button
+        @click="downloadScreenshot"
+        class="cursor-pointer text-blue-500 hover:underline"
+      >
+        Download Screenshot
+      </button>
     </section>
   </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue"
+import html2canvas from "html2canvas" // Import html2canvas library
+import SeatComp from "../components/SeatComp.vue"
 
 const totalSeats = ref(12) // Initial value for total number of seats
 const maxSeatsPerRow = ref(4) // Initial value for maximum seats per row
+const selectedSeats = reactive({})
+
+// Watch for changes in selected seats
+watch(selectedSeats, (newSelectedSeats) => {
+  console.log("Selected Seats:", newSelectedSeats)
+})
+
+// Function to capture a screenshot and generate a download link
+const downloadScreenshot = async () => {
+  const url = await captureScreenshot()
+  if (url) {
+    // Create a temporary link element to trigger the download
+    const link = document.createElement("a")
+    link.href = url
+    link.download = "seating-grid.png" // Set the desired filename
+    link.click()
+  } else {
+    console.error("Error capturing or downloading the screenshot.")
+  }
+}
+
+// Function to capture a screenshot and generate a download link
+const captureScreenshot = async () => {
+  const gridElement = document.querySelector(".grid") // Replace with the actual grid container element
+
+  if (!gridElement) {
+    console.error("Grid element not found")
+    return
+  }
+
+  try {
+    // Capture the grid as a screenshot
+    const canvas = await html2canvas(gridElement)
+
+    // Convert the screenshot to a data URL
+    const screenshotDataURL = canvas.toDataURL("image/png")
+
+    // Create a Blob from the data URL
+    const blob = dataURItoBlob(screenshotDataURL)
+
+    // Create a URL for the Blob
+    const url = window.URL.createObjectURL(blob)
+
+    // Return the URL as the download link
+    return url
+  } catch (error) {
+    console.error("Error capturing screenshot:", error)
+    return null
+  }
+}
+
+// Function to convert data URI to Blob
+const dataURItoBlob = (dataURI) => {
+  const byteString = atob(dataURI.split(",")[1])
+  const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0]
+  const ab = new ArrayBuffer(byteString.length)
+  const ia = new Uint8Array(ab)
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i)
+  }
+  return new Blob([ab], { type: mimeString })
+}
 
 const computedColumns = computed(() => {
   const seats = parseInt(totalSeats.value)
@@ -75,6 +162,24 @@ const computedColumns = computed(() => {
 
   return Math.ceil(seats / maxSeats)
 })
+
+const selectedSeatNumbers = computed(() => {
+  const selectedSeatNames = Object.keys(selectedSeats).filter(
+    (seatName) => selectedSeats[seatName]
+  )
+  return selectedSeatNames
+    .map((seatName) => seatName.replace("Seat ", ""))
+    .join(", ")
+})
+
+const onSeatSelected = (seatName, isSelected) => {
+  // Update the selectedSeats object when a seat is selected or deselected
+  if (isSelected) {
+    selectedSeats[seatName] = true
+  } else {
+    delete selectedSeats[seatName]
+  }
+}
 
 const computedGrid = computed(() => {
   const seats = parseInt(totalSeats.value)
