@@ -1,17 +1,17 @@
 <script setup>
-  import { defineAsyncComponent, ref, watch, emit, computed } from 'vue'
-
   const props = defineProps({
     name: {
       type: String,
-      required: true,
+      required: true
     },
     cell: {
       type: String,
-      required: true,
+      required: true
     },
-    modelValue: Boolean, // Use a modelValue prop for v-model
+    modelValue: Boolean // Use a modelValue prop for v-model
   })
+
+  const emit = defineEmits()
 
   // Use a ref to keep track of the selection state
   const isSelected = ref(props.modelValue || false)

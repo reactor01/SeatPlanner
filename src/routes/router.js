@@ -10,9 +10,9 @@ const routes = [
       {
         path: '',
         name: 'Home',
-        component: () => import('@/pages/HomePage.vue'),
-      },
-    ],
+        component: () => import('@/pages/HomePage.vue')
+      }
+    ]
   },
   {
     path: '/login',
@@ -21,9 +21,9 @@ const routes = [
       {
         path: '',
         name: 'Login',
-        component: () => import('@/pages/LoginPage.vue'),
-      },
-    ],
+        component: () => import('@/pages/LoginPage.vue')
+      }
+    ]
   },
   {
     path: '/dashboard',
@@ -33,15 +33,15 @@ const routes = [
         path: '',
         name: 'Dashboard',
         component: () => import('@/pages/DashboardPage.vue'),
-        meta: { requiresAuth: true }, // Add the requiresAuth meta
-      },
-    ],
-  },
+        meta: { requiresAuth: true } // Add the requiresAuth meta
+      }
+    ]
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })
 
 router.beforeEach((to, from, next) => {

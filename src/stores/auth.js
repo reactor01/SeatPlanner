@@ -6,14 +6,13 @@ export const useAuthStore = defineStore('auth', {
     user: null
   }),
   actions: {
-    async login (username, password) {
+    async login(username, password) {
       const response = await fetch('http://localhost:3000/api/users')
       const data = await response.json()
 
       if (data && data.length > 0) {
         const matchingUser = data.find(
-          (user) =>
-            user.username === username && user.password === password,
+          user => user.username === username && user.password === password
         )
 
         if (matchingUser) {
@@ -24,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
           // Create a user object
           const userObject = {
             id: matchingUser.id,
-            username: matchingUser.username,
+            username: matchingUser.username
           }
 
           // Store the user object in local storage
@@ -53,6 +52,6 @@ export const useAuthStore = defineStore('auth', {
       // Remove user information from local storage
       localStorage.removeItem('user')
       localStorage.setItem('isAuthenticated', 'false')
-    },
-  },
+    }
+  }
 })

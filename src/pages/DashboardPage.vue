@@ -84,7 +84,6 @@
 </template>
 
 <script setup>
-  import { ref, computed, watch, reactive } from 'vue'
   import html2canvas from 'html2canvas' // Import html2canvas library
   import SeatComp from '../components/SeatComp.vue'
 

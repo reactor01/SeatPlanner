@@ -8,5 +8,6 @@ module.exports = {
     'vue/attribute-hyphenation': 'error',
     'no-unused-vars': 0,
     'no-undefined': 0
-  }
+  },
+  types: [...'vue/ref-macros']
 }
