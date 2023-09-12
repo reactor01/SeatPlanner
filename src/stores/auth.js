@@ -1,19 +1,19 @@
-import { defineStore } from "pinia"
+import { defineStore } from 'pinia'
 
-export const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false,
-    user: null,
+    user: null
   }),
   actions: {
-    async login(username: any, password: any) {
-      const response = await fetch("http://localhost:3000/api/users")
+    async login (username, password) {
+      const response = await fetch('http://localhost:3000/api/users')
       const data = await response.json()
 
       if (data && data.length > 0) {
         const matchingUser = data.find(
-          (user: { username: any; password: any }) =>
-            user.username === username && user.password === password
+          (user) =>
+            user.username === username && user.password === password,
         )
 
         if (matchingUser) {
@@ -28,8 +28,8 @@ export const useAuthStore = defineStore("auth", {
           }
 
           // Store the user object in local storage
-          localStorage.setItem("user", JSON.stringify(userObject))
-          localStorage.setItem("isAuthenticated", "true")
+          localStorage.setItem('user', JSON.stringify(userObject))
+          localStorage.setItem('isAuthenticated', 'true')
 
           return true
         } else {
@@ -40,7 +40,7 @@ export const useAuthStore = defineStore("auth", {
         }
       } else {
         // Handle the case where no data is loaded
-        console.error("No data loaded or empty data array.")
+        console.error('No data loaded or empty data array.')
         this.isAuthenticated = false
         this.user = null
       }
@@ -51,8 +51,8 @@ export const useAuthStore = defineStore("auth", {
       this.user = null
 
       // Remove user information from local storage
-      localStorage.removeItem("user")
-      localStorage.setItem("isAuthenticated", "false")
+      localStorage.removeItem('user')
+      localStorage.setItem('isAuthenticated', 'false')
     },
   },
 })

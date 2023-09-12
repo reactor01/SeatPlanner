@@ -30,7 +30,7 @@
     "vite.config.*",
     "auto-imports.d.ts",
     "src/routes/router.ts",
-    "src/stores/auth.ts"
+    "src/stores/auth.js"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

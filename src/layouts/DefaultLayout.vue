@@ -47,16 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router"
-import { useAuthStore } from "@/stores/auth.js" // Import your auth store here
+  import { useRouter } from 'vue-router'
+  import { useAuthStore } from '@/stores/auth.js' // Import your auth store here
 
-const router = useRouter()
-const authStore = useAuthStore()
+  const router = useRouter()
+  const authStore = useAuthStore()
 
-const logout = async () => {
-  await authStore.logout() // Call the logout action from your auth store
-  router.push("/")
-}
+  const logout = async () => {
+    await authStore.logout() // Call the logout action from your auth store
+    router.push('/')
+  }
 </script>
 
 <style scoped></style>

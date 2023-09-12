@@ -1,11 +1,11 @@
-import { defineConfig } from "vite"
+import { defineConfig } from 'vite'
 //Install node types before calling below import
-import { fileURLToPath } from "url"
-import path from "path"
-import vue from "@vitejs/plugin-vue"
+import { fileURLToPath } from 'url'
+import path from 'path'
+import vue from '@vitejs/plugin-vue'
 
-import AutoImport from "unplugin-auto-import/vite"
-import svgLoader from "vite-svg-loader"
+import AutoImport from 'unplugin-auto-import/vite'
+import svgLoader from 'vite-svg-loader'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +18,7 @@ export default defineConfig({
         /\.vue$/, //$ at the end says it ends with vue
       ],
       //globals (libraries)
-      imports: ["vue", "vue-router", "pinia"],
+      imports: ['vue', 'vue-router', 'pinia'],
       //other settings/files/dirs to import
       dts: true, //Autoimport all the files that ends with d.ts
       //Autoimport inside vue template
@@ -27,16 +27,16 @@ export default defineConfig({
     }),
     svgLoader(),
   ],
-  base: "./",
+  base: './',
   resolve: {
     alias: {
       //Two methods available
       //Method 1 : using fireURLtoPath (keep adding other paths as needed)
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
 
       //Method 2: using path
-      "@components": path.resolve(__dirname, "src/components"),
-      "@pages": path.resolve(__dirname, "src/@Pages"),
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@pages': path.resolve(__dirname, 'src/@Pages'),
     },
   },
 })

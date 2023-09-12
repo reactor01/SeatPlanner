@@ -31,32 +31,32 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"
-import { useAuthStore } from "@/stores/auth"
-import { ref } from "vue"
+  import { useRouter } from 'vue-router'
+  import { useAuthStore } from '@/stores/auth'
+  import { ref } from 'vue'
 
-const router = useRouter()
+  const router = useRouter()
 
-const username = ref("user1")
-const password = ref("1234")
+  const username = ref('user1')
+  const password = ref('1234')
 
-const login = async () => {
-  if (username.value === "" || password.value === "") {
-    console.error("Username and password cannot be empty")
-    return // Exit the function early if fields are empty
-  }
-  const authStore = useAuthStore()
-
-  try {
-    const result = await authStore.login(username.value, password.value)
-    if (result) {
-      router.push("/dashboard")
-    } else {
-      // Show an error message for failed login
-      console.error("Login failed")
+  const login = async () => {
+    if (username.value === '' || password.value === '') {
+      console.error('Username and password cannot be empty')
+      return // Exit the function early if fields are empty
     }
-  } catch (error) {
-    console.error("Error:", error)
+    const authStore = useAuthStore()
+
+    try {
+      const result = await authStore.login(username.value, password.value)
+      if (result) {
+        router.push('/dashboard')
+      } else {
+        // Show an error message for failed login
+        console.error('Login failed')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
-}
 </script>
