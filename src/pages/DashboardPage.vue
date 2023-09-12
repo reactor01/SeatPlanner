@@ -218,6 +218,10 @@
   })
 
   function updateGrid() {
+    // Ensure that totalSeats does not exceed 100
+    if (totalSeats.value > 100) {
+      totalSeats.value = 100 // Set totalSeats to 100 if it exceeds the limit
+    }
     // No need to update the computed property directly
     // Vue will automatically update the computedGrid property when totalSeats or maxSeatsPerRow changes
   }
