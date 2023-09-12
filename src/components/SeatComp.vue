@@ -1,5 +1,5 @@
 <script setup>
-  import { defineAsyncComponent, ref, watch } from 'vue'
+  import { defineAsyncComponent, ref, watch, emit, computed } from 'vue'
 
   const props = defineProps({
     name: {
@@ -12,16 +12,6 @@
     },
     modelValue: Boolean, // Use a modelValue prop for v-model
   })
-
-
-
-
-
-
-  
-
-  const emit = defineEmits()
-  
 
   // Use a ref to keep track of the selection state
   const isSelected = ref(props.modelValue || false)

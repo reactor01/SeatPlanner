@@ -170,7 +170,7 @@
 
   const selectedSeatNumbers = computed(() => {
     const selectedSeatNames = Object.keys(selectedSeats).filter(
-      seatName => selectedSeats[seatName],
+      seatName => selectedSeats[seatName]
     )
     return selectedSeatNames
       .map(seatName => seatName.replace('Seat ', ''))
